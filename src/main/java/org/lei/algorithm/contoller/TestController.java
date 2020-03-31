@@ -31,8 +31,41 @@ public class TestController {
         }
 
         long bubbleStart = System.currentTimeMillis();
-        BubbleSort(arr);
+        selectionSort(arr);
         System.out.println("BubbleSort cost millisecond===>" + (System.currentTimeMillis() - bubbleStart));
+    }
+
+    /**
+     * selection sort
+     * Time complexity :n2
+     * Spatial complexity :1
+     *
+     * @param arr array
+     */
+    private static void selectionSort(int[] arr) {
+
+        int temp;
+        int indexMin;
+        int len = arr.length;
+
+        for (int i = 0; i < len - 1; i++) {
+            indexMin = i;
+
+            // get index of min number from rest arr which from j to len
+            for (int j = i + 1; j < len; j++) {
+
+                // get the smaller number
+                if (arr[indexMin] > arr[j]) {
+                    indexMin = j;
+                }
+            }
+
+            // change
+            temp = arr[i];
+            arr[i] = arr[indexMin];
+            arr[indexMin] = temp;
+        }
+        System.out.println(Arrays.toString(arr));
     }
 
     /**
@@ -42,7 +75,7 @@ public class TestController {
      *
      * @param arr array
      */
-    private static void BubbleSort(int[] arr) {
+    private static void bubbleSort(int[] arr) {
 
         int temp;
         int len = arr.length;
