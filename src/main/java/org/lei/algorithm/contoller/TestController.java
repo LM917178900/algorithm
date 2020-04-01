@@ -23,7 +23,7 @@ public class TestController {
 
     public static void main(String[] args) {
 
-        int totalNumber = 100;
+        int totalNumber = 1000;
         int[] arr = new int[totalNumber];
         for (int i = 0; i < totalNumber; i++) {
             arr[i] = new Random().nextInt(totalNumber);
@@ -31,9 +31,69 @@ public class TestController {
         }
 
         long bubbleStart = System.currentTimeMillis();
-        insertSort_03(arr);
-        System.out.println(Arrays.toString(arr));
+        leiminSort(arr);
         System.out.println("THIS Sort cost millisecond===>" + (System.currentTimeMillis() - bubbleStart));
+        System.out.println(Arrays.toString(arr));
+    }
+
+    /**
+     * leimin sort _03:compare number to new arr one by one
+     * Time complexity :less than n2
+     * Spatial complexity :2
+     *
+     * @param arr array
+     */
+    private static void leiminSort(int[] arr) {
+
+
+        int start = 0, end, pIndex, temp, middle = 0;
+
+        for (int i = 1; i < arr.length; i++) {
+
+            pIndex = i;
+            temp = arr[i];
+            end = i;
+            // 1.construct a new arr
+            // 2.get a number from old arr
+            // 3.compare with the middle number in new arr
+            int target = getTargetIndex(arr, start, end, temp, middle);
+
+            // 4.get target index
+            // 5.replace and fresh new arr
+            while (pIndex > target && temp < arr[pIndex - 1]) {
+                arr[pIndex] = arr[pIndex - 1];
+                pIndex--;
+            }
+            arr[pIndex] = temp;
+
+        }
+    }
+
+    /**
+     * get the position of tempNumber in arr
+     *
+     * @param arr    array
+     * @param start  s
+     * @param end    e
+     * @param temp   tempNumber
+     * @param middle middle index
+     * @return target index
+     */
+    private static int getTargetIndex(int[] arr, int start, int end, int temp, int middle) {
+
+        middle = (start + end) >> 1;
+        if (arr[middle] > temp) {
+            end = middle;
+        } else if (arr[middle] < temp) {
+            start = middle;
+        } else {
+            return middle;
+        }
+
+        if (start == end - 1 || start == end) {
+            return start;
+        }
+        return getTargetIndex(arr, start, end, temp, middle);
     }
 
     /**
@@ -47,11 +107,9 @@ public class TestController {
 
         int pIndex;
         int temp;
-        for (int i = 0; i < arr.length - 1; i++) {
+        for (int i = 1; i < arr.length; i++) {
 
-            // construct a new arr by right order
-            // get i_nd number
-            pIndex = i + 1;
+            pIndex = i;
             temp = arr[pIndex];
 
             // iterator new arr and compare with i_nd
@@ -72,15 +130,14 @@ public class TestController {
      */
     private static void selectionSort(int[] arr) {
 
-        int temp;
-        int indexMin;
+        int temp, indexMin, j;
         int len = arr.length;
 
         for (int i = 0; i < len - 1; i++) {
             indexMin = i;
 
             // get index of min number from rest arr which from j to len
-            for (int j = i + 1; j < len; j++) {
+            for (j = i + 1; j < len; j++) {
 
                 // get the smaller number
                 if (arr[indexMin] > arr[j]) {
@@ -105,12 +162,12 @@ public class TestController {
      */
     private static void bubbleSort(int[] arr) {
 
-        int temp;
+        int temp, j;
         int len = arr.length;
 
         for (int i = 0; i < len; i++) {
 
-            for (int j = 0; j < len - i - 1; j++) {
+            for (j = 0; j < len - i - 1; j++) {
 
                 if (arr[j] > arr[j + 1]) {
                     temp = arr[j];
