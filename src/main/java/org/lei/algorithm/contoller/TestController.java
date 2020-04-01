@@ -31,12 +31,40 @@ public class TestController {
         }
 
         long bubbleStart = System.currentTimeMillis();
-        selectionSort(arr);
-        System.out.println("BubbleSort cost millisecond===>" + (System.currentTimeMillis() - bubbleStart));
+        insertSort_03(arr);
+        System.out.println(Arrays.toString(arr));
+        System.out.println("THIS Sort cost millisecond===>" + (System.currentTimeMillis() - bubbleStart));
     }
 
     /**
-     * selection sort
+     * insert sort _03:compare number to new arr one by one
+     * Time complexity :less than n2
+     * Spatial complexity :2
+     *
+     * @param arr array
+     */
+    private static void insertSort_03(int[] arr) {
+
+        int pIndex;
+        int temp;
+        for (int i = 0; i < arr.length - 1; i++) {
+
+            // construct a new arr by right order
+            // get i_nd number
+            pIndex = i + 1;
+            temp = arr[pIndex];
+
+            // iterator new arr and compare with i_nd
+            while (pIndex > 0 && temp < arr[pIndex - 1]) {
+                arr[pIndex] = arr[pIndex - 1];
+                pIndex--;
+            }
+            arr[pIndex] = temp;
+        }
+    }
+
+    /**
+     * selection sort：get the smallest one in the rest arr ,and set into new array
      * Time complexity :n2
      * Spatial complexity :1
      *
@@ -65,12 +93,12 @@ public class TestController {
             arr[i] = arr[indexMin];
             arr[indexMin] = temp;
         }
-        System.out.println(Arrays.toString(arr));
+
     }
 
     /**
-     * bubble sort
-     * Time complexity :n2
+     * bubble sort:get the biggest one in the arr by length times,and construct a new arr
+     * Time complexity :1.5*n2
      * Spatial complexity :1
      *
      * @param arr array
@@ -91,7 +119,6 @@ public class TestController {
                 }
             }
         }
-        System.out.println(Arrays.toString(arr));
     }
 
 }
