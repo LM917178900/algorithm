@@ -23,23 +23,68 @@ public class TestController {
 
     public static void main(String[] args) {
 
-        int totalNumber = 1000;
+        int totalNumber = 10000;
         int[] arr = new int[totalNumber];
+        int[] arr_01 = new int[totalNumber];
+        int[] arr_02 = new int[totalNumber];
+        int[] arr_03 = new int[totalNumber];
         for (int i = 0; i < totalNumber; i++) {
             arr[i] = new Random().nextInt(totalNumber);
-
+            arr_01[i] = new Random().nextInt(totalNumber);
+            arr_02[i] = new Random().nextInt(totalNumber);
+            arr_03[i] = new Random().nextInt(totalNumber);
         }
 
+        long insertStart = System.currentTimeMillis();
+        insertSort_03(arr);
+        System.out.println("THIS Sort cost millisecond===>" + (System.currentTimeMillis() - insertStart));
+        //System.out.println(Arrays.toString(arr));
+
         long bubbleStart = System.currentTimeMillis();
-        leiminSort(arr);
+        shellSort(arr_01);
         System.out.println("THIS Sort cost millisecond===>" + (System.currentTimeMillis() - bubbleStart));
-        System.out.println(Arrays.toString(arr));
+        //System.out.println(Arrays.toString(arr));
+
+        long insertStart_01 = System.currentTimeMillis();
+        insertSort_03(arr_02);
+        System.out.println("THIS Sort cost millisecond===>" + (System.currentTimeMillis() - insertStart_01));
+        //System.out.println(Arrays.toString(arr));
+
+        long insertStart_02 = System.currentTimeMillis();
+        leiminSort(arr_03);
+        System.out.println("THIS Sort cost millisecond===>" + (System.currentTimeMillis() - insertStart_02));
+        //System.out.println(Arrays.toString(arr));
+    }
+
+    /**
+     * shell short
+     *
+     * @param nums array
+     */
+    private static void shellSort(int[] nums) {
+        int n = nums.length;
+        int gap, i, j;
+
+        // get gap ,gap divide by 2
+        for (gap = n / 2; gap > 0; gap /= 2) {
+
+            // iterator form gap to length
+            for (i = gap; i < n; i++) {
+
+                int num = nums[i];
+                // compare and replace from gap to 0
+                for (j = i - gap; j >= 0 && nums[j] > num; j -= gap) {
+                    nums[j + gap] = nums[j];
+                }
+                nums[j + gap] = num;
+            }
+        }
     }
 
     /**
      * leimin sort _03:compare number to new arr one by one
      * Time complexity :less than n2
-     * Spatial complexity :2
+     * Spatial complexity :5
      *
      * @param arr array
      */
